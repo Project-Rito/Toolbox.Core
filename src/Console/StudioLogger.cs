@@ -16,6 +16,14 @@ namespace Toolbox.Core
         private static List<Entry> Errors = new List<Entry>();
         private static List<Entry> Warnings = new List<Entry>();
 
+        private static string OutputLog = "";
+        private static string ErrorLog = "";
+        private static string WarningLog = "";
+
+        private static int OutputLogLength;
+        private static int ErrorLogLength;
+        private static int WarningLogLength;
+
         private static string Line;
 
         /// <summary>
@@ -53,7 +61,7 @@ namespace Toolbox.Core
         }
 
         static string GetLog(List<Entry> entries)
-        {
+                {
             string output = "";
             for (int i = 0; i < entries.Count; i++)
                 output += entries[i].Text + "\n";

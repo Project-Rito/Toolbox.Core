@@ -156,6 +156,20 @@ namespace Toolbox.Core.Animations
             {
                 float FrameDiff = Frame - LK.Frame;
                 float Weight = FrameDiff / (RK.Frame - LK.Frame);
+                if (LK is STLinearKeyFrame)
+                    Weight = ((STLinearKeyFrame)LK).Delta;
+
+                if (LK is STBezierKeyFrame)
+                {
+                    var p0 = LK.Value;
+                    var p1 = ((STBezierKeyFrame)LK).SlopeOut;
+                    var p2 = ((STBezierKeyFrame)RK).SlopeIn;
+                    var p3 = RK.Value;
+                    return InterpolationHelper.BezierInterpolate(Frame,
+                        LK.Frame, RK.Frame,
+                        p1, p2,
+                        p0, p3);
+                }
 
                 switch (InterpolationType)
                 {

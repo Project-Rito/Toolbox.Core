@@ -40,7 +40,7 @@ namespace Toolbox.Core
         {
             using (FileReader reader = new FileReader(stream))
             {
-                reader.ByteOrder = Syroot.BinaryData.ByteOrder.LittleEndian;
+                reader.ByteConverter = Syroot.BinaryData.ByteConverter.Little;
 
                 magic = reader.ReadBytes(4);
 
@@ -109,7 +109,7 @@ namespace Toolbox.Core
                 if (Depth == 0)
                     Depth = 1;
 
-                writer.ByteOrder = Syroot.BinaryData.ByteOrder.LittleEndian;
+                writer.ByteConverter = Syroot.BinaryData.ByteConverter.Little;
                 writer.Write(MagicFileConstant);
                 writer.Write(BlockDimX);
                 writer.Write(BlockDimY);

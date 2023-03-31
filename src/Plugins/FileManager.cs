@@ -78,5 +78,15 @@ namespace Toolbox.Core
 
             return types.ToArray();
         }
+
+        public static IPluginConfig[] GetPluginSettings()
+        {
+            List<IPluginConfig> types = new List<IPluginConfig>();
+            foreach (var plugin in PluginManager.LoadPlugins(true))
+                if (plugin.PluginSettingsUI != null)
+                    types.Add(plugin.PluginSettingsUI);
+
+            return types.ToArray();
+        }
     }
 }

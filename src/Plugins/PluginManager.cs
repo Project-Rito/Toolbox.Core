@@ -21,7 +21,7 @@ namespace Toolbox.Core
             public List<IExportableAnimation> ExportableAnimations = new List<IExportableAnimation>();
             public List<IExportableTexture> ExportableTextures = new List<IExportableTexture>();
 
-            //importables
+            //Importables
             public List<IImportableTexture> ImportableTextures = new List<IImportableTexture>();
             public List<IImportableModel> ImportableModels = new List<IImportableModel>();
 
@@ -32,6 +32,7 @@ namespace Toolbox.Core
             //Texture decoding
             public List<ITextureDecoder> TextureDecoders = new List<ITextureDecoder>();
 
+            public IPluginConfig PluginSettingsUI;
             public IPlugin PluginHandler;
         }
 
@@ -70,10 +71,19 @@ namespace Toolbox.Core
 
                 loadedLibs.Add(name);
 
-                AssemblyName an = AssemblyName.GetAssemblyName(dllFile);
+                AssemblyName an;
+                try
+                {
+                    an = AssemblyName.GetAssemblyName(dllFile);
+                }
+                catch
+                {
+                    continue;
+                }
+
                 Assembly assembly = Assembly.Load(an);
                 assemblies.Add(assembly);
-            }
+                }
 
             foreach (Assembly assembly in assemblies)
             {
@@ -122,6 +132,7 @@ namespace Toolbox.Core
                                 plugin.PluginHandler = (IPlugin)Activator.CreateInstance(type);
                             }
 
+                            AddType(ref plugin.PluginSettingsUI, type);
                             AddTypeList(plugin.FileFormats, type);
                             AddTypeList(plugin.CompressionFormats, type);
                             AddTypeList(plugin.FileEditors, type);
@@ -154,6 +165,14 @@ namespace Toolbox.Core
                 }
             }
             return plugin;
+        }
+
+        private static void AddType<T>(ref T value, Type type)
+        {
+            if (type.GetInterface(typeof(T).FullName) != null)
+            {
+                value = (T)Activator.CreateInstance(type);
+            }
         }
 
         private static void AddTypeList<T>(List<T> list, Type type)

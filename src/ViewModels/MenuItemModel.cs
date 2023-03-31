@@ -22,6 +22,9 @@ namespace Toolbox.Core.ViewModels
             }
         }
 
+
+        public string Icon { get; set; }
+
         public string ToolTip { get; set; } = "";
 
         private bool _isChecked;
@@ -64,7 +67,11 @@ namespace Toolbox.Core.ViewModels
 
         public object Tag { get; set; }
 
-        public MenuItemModel() { }
+        public MenuItemModel()
+        {
+            MenuItems = new List<MenuItemModel>();
+            _command = new CommandViewModel(Execute);
+        }
 
         public MenuItemModel(string name)
         {

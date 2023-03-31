@@ -40,20 +40,43 @@ namespace Toolbox.Core.ViewModels
 
         public int DisplayIndex = -1;
 
-        private string _header;
+        public Func<string> GetHeader;
 
         /// <summary>
         /// Gets or sets the header of the tree node.
         /// </summary>
         public virtual string Header
         {
-            get { return _header; }
+            get
+            {
+                return GetHeader();
+            }
             set
             {
-                _header = value;
-                RaisePropertyChanged("Header");
+                GetHeader = () => { return value; };
             }
         }
+
+        public Action CustomHeaderDraw;
+
+        public Func<string> GetTooltip;
+
+        /// <summary>
+        /// Gets or sets the tooltip of the tree node.
+        /// </summary>
+        public virtual string Tooltip
+        {
+            get
+            {
+                return GetTooltip();
+            }
+            set
+            {
+                GetTooltip = () => { return value; };
+            }
+        }
+
+        public Action CustomTooltipDraw;
 
         private bool _hasCheckBox = false;
 
@@ -131,7 +154,7 @@ namespace Toolbox.Core.ViewModels
             }
         }
 
-        private string _icon = "\\Images\\Folder.png";
+        private string _icon = "/Images/Folder.png";
 
         /// <summary>
         /// Gets the icon key or character of the node.
@@ -147,7 +170,7 @@ namespace Toolbox.Core.ViewModels
             }
         }
 
-        private object imageSoure = new Uri("\\Images\\Folder.png", UriKind.Relative);
+        private object imageSoure = new Uri("/Images/Folder.png", UriKind.Relative);
 
         /// <summary>
         /// Gets or sets the raw image source of the Icon value.
@@ -182,6 +205,12 @@ namespace Toolbox.Core.ViewModels
 
             if (Parent != null)
                 Parent.ExpandParent();
+        }
+
+        public void RemoveFromParent()
+        {
+            if (Parent != null)
+                Parent.Children.Remove(this);
         }
 
         private bool _isChecked = true;
