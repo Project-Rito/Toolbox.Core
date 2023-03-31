@@ -48,13 +48,9 @@ namespace Toolbox.Core.IO
 
             try
             {
-                foreach (ICompressionFormat compressionFormat in FileManager.GetCompressionFormats())
-                {
                 stream.Position = streamStartPos;
                 ICompressionFormat compressionFormat =  GetCompressionFormat(stream, fileName);
                 Console.WriteLine("compressionFormat " + compressionFormat);
-
-                        stream.Position = streamStartPos;
 
                 settings.CompressedSize = (uint)stream.Length;
                 settings.Stream = compressionFormat.Decompress(stream);
@@ -63,8 +59,6 @@ namespace Toolbox.Core.IO
                 //Close compressed stream and use settings.Stream instead
                 stream.Close();
                 return settings;
-                    }
-                }
             } //It's possible some types fail to compress if identify was incorrect so we should skip any errors
             catch (Exception ex)
             {

@@ -49,9 +49,9 @@ namespace Toolbox.Core
                 if (magicval != MagicFileConstant)
                     throw new Exception("Invalid identifier");
 
-                BlockDimX = reader.ReadByte();
-                BlockDimY = reader.ReadByte();
-                BlockDimZ = reader.ReadByte();
+                BlockDimX = (byte)reader.ReadByte();
+                BlockDimY = (byte)reader.ReadByte();
+                BlockDimZ = (byte)reader.ReadByte();
                 xsize = reader.ReadBytes(3);
                 ysize = reader.ReadBytes(3);
                 zsize = reader.ReadBytes(3);

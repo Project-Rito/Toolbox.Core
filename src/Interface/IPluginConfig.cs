@@ -7,7 +7,5 @@ namespace Toolbox.Core
     public interface IPluginConfig
     {
         void DrawUI();
-        void Load();
-        void Save();
     }
 }
