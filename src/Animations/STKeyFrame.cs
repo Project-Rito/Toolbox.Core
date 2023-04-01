@@ -71,27 +71,6 @@ namespace Toolbox.Core.Animations
     }
 
     /// <summary>
-    /// Represents a linear key frame used for linear interpolation
-    /// This key frame provides the delta value to determine the weight between keys.
-    /// </summary>
-    public class STLinearKeyFrame : STKeyFrame
-    {
-        /// <summary>
-        /// The delta of linear key value.
-        /// </summary>
-        public virtual float Delta { get; set; }
-
-        public STLinearKeyFrame() { }
-
-        public STLinearKeyFrame(int frame, float value, float delta)
-        {
-            Frame = frame;
-            Value = value;
-            Delta = delta;
-        }
-    }
-
-    /// <summary>
     /// Represents a bezier key frame used for beizer interpolation
     /// </summary>
     public class STBezierKeyFrame : STKeyFrame

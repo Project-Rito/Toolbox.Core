@@ -38,7 +38,7 @@ namespace Toolbox.Core.IO
                     fileFormat.Save(fileStream);
                     if (fileFormat.FileInfo.Compression != null)
                     {
-                       // Stream comp = CompressFile(File.OpenRead(tempPath), fileFormat);
+                        // Stream comp = CompressFile(File.OpenRead(tempPath), fileFormat);
                         //fileStream.CopyTo(comp);
                     }
 
@@ -62,21 +62,23 @@ namespace Toolbox.Core.IO
                 fileFormat.Save(mem);
                 if (fileFormat.FileInfo.Compression is Yaz0)
                 {
-                    File.WriteAllBytes(fileName, YAZ0.Compress(mem.ToArray(), Runtime.Yaz0CompressionLevel, (uint)((Yaz0)fileFormat.FileInfo.Compression).Alignment));
+                    File.WriteAllBytes(filePath, YAZ0.Compress(mem.ToArray(), Runtime.Yaz0CompressionLevel, (uint)((Yaz0)fileFormat.FileInfo.Compression).Alignment));
                 }
                 else
                 {
                     mem = new MemoryStream(mem.ToArray());
                     var finalStream = CompressFile(mem, fileFormat);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
-                {
-                    finalStream.CopyTo(fileStream);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
+                    {
+                        finalStream.CopyTo(fileStream);
+                    }
                 }
             }
             else
             {
-                using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) {
+                using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
                     fileFormat.Save(fileStream);
                 }
             }
